@@ -1,0 +1,309 @@
+{% extends 'recipe/base.html' %}
+
+{%block back%} 
+{%url "recipe-home" %}
+{%endblock back%}
+
+
+
+{% block content%}
+{%load crispy_forms_tags%}
+
+<!-- 
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+        <h1> Add a Recipe </h1>
+        <form action = "." method="post">
+            {% csrf_token %}
+            {{form|crispy}}
+            <br>
+            <br>
+            {{ formset.management_form}}
+            {% for form in formset %}
+            {{form|crispy}}
+            {% endfor %}          
+            <button type="submit">Submit </button>
+        </form>
+        </div>
+    </div>
+</div>
+
+
+-->
+
+
+<h3> Ajouter les ingrédients :</h3>
+
+<form id="pet_form"  action="."  method="post" enctype="multipart/form-data">
+
+    {% csrf_token %}
+
+    {{ form|crispy }}
+
+
+</br>
+</br>
+</br>
+    {{ formset.management_form }}
+    {% for form in formset %}
+    <div class="image-form d-flex justify-content-between"  id="recipeForm" data-formes-url="{% url 'ajax_load_forme' %}"  data-ingredients-url="{% url 'ajax_load_ingredient' %}"  >
+            
+        <div class = "row">
+            <br>
+            <br>
+
+            <div class = " col-sm">
+                Famille :
+                {{ form.famille}}
+            </div>
+
+            <div class = " col-sm">
+                Ingrédient :
+                {{ form.forme}}
+            </div>  
+
+            <div class = " col-sm">
+                Forme :
+                {{ form.ingredient}}
+            </div>  
+
+            <div class = " col-sm">
+                Quantité (g):
+                {{ form.quantity}}
+            </div>  
+
+
+                {{form.DELETE}}
+
+            <div class = " col-sm">
+                <br>
+                <button class="align-self-center btn btn-danger delete-image-form">supprimer</button>
+            </div>
+
+        </div>
+
+    </div>    
+
+    {% endfor %}
+
+
+    <input type="submit" value="Passer au processus de preparation" name='terminerBttn'/>  </button>
+    <button id="add-image-form" class="btn btn-primary my-3">ajouter un nouvel ingrédient</button>
+    <input type="hidden" name="counter_newid" value="3" id="id_counter_new_id">
+</form>
+
+
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+
+
+<script>
+
+const imageForm = document.getElementsByClassName("image-form");
+const mainForm = document.querySelector("#pet_form");
+const addImageFormBtn = document.querySelector("#add-image-form");
+const submitFormBtn = document.querySelector('[type="submit"]');
+const totalForms = document.getElementById("id_ingredients_recipe-TOTAL_FORMS");
+
+const counterID = document.getElementById("id_counter_new_id");
+
+function updateForms() {
+    let formCount = imageForm.length ;
+    let count = 0;
+    for (let form of imageForm) {
+        const formRegex = RegExp(`ingredients_recipe-(\\d){1}-`, 'g');
+        form.innerHTML = form.innerHTML.replace(formRegex, `ingredients_recipe-${count++}-`)
+    }
+}
+
+addImageFormBtn.addEventListener("click", function (event) {
+    event.preventDefault();
+    //let formCount = imageForm.length ;
+    const formCount = imageForm.length
+    //const formCount = parseInt(counterID.getAttribute('value')) + 1 ;
+    var newImageForm = imageForm[0].cloneNode(true);
+    const formRegex = RegExp(`ingredients_recipe-(\\d){1}-`, 'g');
+
+    newImageForm.innerHTML = newImageForm.innerHTML.replace(formRegex, `ingredients_recipe-${formCount}-`);
+
+        
+    newImageForm.style.visibility = 'visible';
+    newImageForm.style.height='100%';
+
+    mainForm.insertBefore(newImageForm, submitFormBtn);
+    totalForms.setAttribute('value', formCount + 1);
+
+    //counterID.setAttribute('value', formCount + 1);
+
+    get_ingredients();
+});
+
+mainForm.addEventListener("click", function (event) {
+    let formCount = imageForm.length ;
+    if (event.target.classList.contains("delete-image-form")) {
+        event.preventDefault();
+        const deleteRegex = RegExp(`id_ingredients_recipe-(\\d){1}-DELETE-`, 'g');
+        event.target.parentElement.parentElement.parentElement.querySelectorAll('[id$="-DELETE"]')[0].checked = true;
+        //console.log(event.target.parentElement.querySelectorAll('[id$="-DELETE"]')[0].checked)
+        //console.log(document.querySelectorAll('[id$="-DELETE"]'))
+        console.log('Test')
+        
+        //event.target.parentElement.remove();
+        event.target.parentElement.parentElement.parentElement.style.visibility = 'hidden';
+        event.target.parentElement.parentElement.parentElement.style.height=0;
+        // show - use this for inline elements (span, a)
+        //formCount--;
+        //updateForms();
+        //totalForms.setAttribute('value', 5);
+    }
+});
+</script>
+
+
+<!-- 
+<h1>Add a new bird</h1>
+<form id="form-container" method="POST">
+    {% csrf_token %}
+    {{bird_formset.management_form}}
+    {% for form in bird_formset %}
+    <div class="bird-form">
+    {{form.as_p}}
+    </div>
+    {% endfor %}
+    <button id="add-form" type="button">Add Another Bird</button>
+    <button type="submit">Create Birds</button>
+</form>
+
+
+<script>
+    let birdForm = document.querySelectorAll(".bird-form")
+    let container = document.querySelector("#form-container")
+    let addButton = document.querySelector("#add-form")
+    let totalForms = document.querySelector("#id_form-TOTAL_FORMS")
+
+    let formNum = birdForm.length-1
+    addButton.addEventListener('click', addForm)
+
+    function addForm(e){
+        e.preventDefault()
+
+        let newForm = birdForm[0].cloneNode(true)
+        let formRegex = RegExp(`ingredients_recipe-(\\d){1}-`,'g')
+
+        formNum++
+        newForm.innerHTML = newForm.innerHTML.replace(formRegex, `ingredients_recipe-${formNum}-`)
+        container.insertBefore(newForm, addButton)
+        
+        totalForms.setAttribute('value', `${formNum+1}`)
+    }
+</script>
+-->
+
+<script>
+    var del = document.querySelectorAll('[id$="-DELETE"]')
+
+    for (let i=0; i < del.length; i++ ) {
+        console.log(del[i]);
+        del[i].style.visibility = 'hidden';
+    }
+        
+</script>
+
+<script>
+ 
+    //for (let i = 0; i < imageForm.length; i++) {
+    const id_count = $("id_counter_new_id")
+    
+    function get_ingredients() {
+
+        for (let i = 0; i < 10; i++) { 
+            //console.log(i)
+        const formRegex1 = '#' + 'id_ingredients_recipe-'+ i + '-famille'
+        const formRegex2 = '#' + 'id_ingredients_recipe-' + i + '-forme'
+        console.log(formRegex1)
+        const id1 = $(formRegex1)
+        const id2 = $(formRegex2)
+        id1.change(function () {
+            const url = $("#recipeForm").attr("data-formes-url");  // get the url of the `load_cities` view
+            const familleId = $(this).val();  // get the selected country ID from the HTML input
+
+            $.ajax({                       // initialize an AJAX request
+                url: url,                    // set the url of the request (= /persons/ajax/load-cities/ )
+                data: {
+                    'famille_id': familleId       // add the country id to the GET parameters
+                },
+                success: function (data) {   // `data` is the return of the `load_cities` view function
+                    $(id2).html(data); 
+                     // replace the contents of the city input with the data that came from the server
+                    /*
+
+                    let html_data = '<option value="">---------</option>';
+                    data.forEach(function (city) {
+                        html_data += `<option value="${city.id}">${city.name}</option>`
+                    });
+                    console.log(html_data);
+                    $("#id_city").html(html_data);
+
+                    */
+                }
+            });
+
+
+        });
+
+        }
+
+
+
+
+        for (let i = 0; i < 10; i++) {
+            console.log(i)
+            const formRegex1 = '#' + 'id_ingredients_recipe-'+ i + '-forme'
+            const formRegex2 = '#' + 'id_ingredients_recipe-' + i + '-ingredient'
+            const id1 = $(formRegex1)
+            const id2 = $(formRegex2)
+            id1.change(function () {
+                console.log("Test Change ingredient");
+                const url = $("#recipeForm").attr("data-ingredients-url");  // get the url of the `load_cities` view
+                const formeId = $(this).val();  // get the selected country ID from the HTML input
+
+                $.ajax({                       // initialize an AJAX request
+                    url: url,                    // set the url of the request (= /persons/ajax/load-cities/ )
+                    data: {
+                        'forme_id': formeId       // add the country id to the GET parameters
+                    },
+                    success: function (data) {   // `data` is the return of the `load_cities` view function
+                        $(id2).html(data);  // replace the contents of the city input with the data that came from the server
+                    /*
+
+                    let html_data = '<option value="">---------</option>';
+                    data.forEach(function (city) {
+                        html_data += `<option value="${city.id}">${city.name}</option>`
+                    });
+                    console.log(html_data);
+                    $("#id_city").html(html_data);
+
+                    */
+                    console.log(data);
+                }
+            });
+
+        });
+
+        }
+
+
+
+
+    }
+
+    get_ingredients()
+
+
+
+</script>
+{% endblock %}
+
+

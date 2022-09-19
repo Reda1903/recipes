@@ -1,0 +1,18 @@
+{% extends 'recipe/base.html' %}
+
+
+    {% block content %}
+    <h1> Mes ingrédients </h1>
+    {% for ingredient in ingredients%}
+
+    <div class="card" style="width: 18rem;">
+  
+        <div class="card-body">
+            <h5 class="card-title"> {{ingredient.name}} </h5>
+            <p class="card-text">{{ingredient.famille}}</p>
+            <a href={% url 'ingredient-detail' ingredient.pk%} class="card-link">voir details ingredients</a>
+        </div>
+    </div>
+    
+    {%endfor%}
+    {% endblock content%}

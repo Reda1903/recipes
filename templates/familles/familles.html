@@ -1,0 +1,103 @@
+{% extends 'recipe/base.html' %}
+
+{%block back%} 
+{%url "recipe-home" %}
+{%endblock back%}
+
+
+
+
+    {% block content %}
+    <h1> Les familles </h1>
+
+    <form action="" method="post">
+
+        Barre de Recherche : 
+        {% csrf_token %}
+
+
+        <div>
+            <input class="form-control" list ="famille_list" type="text" id='search_item' placeholder='chercher famille' aria-label='search' name='search' style='width:40%; display: inline-block'>
+            <input class="btn-secondary" id="search_button" type="submit" name="search_button" value="Chercher" style="display: inline-block">
+            <datalist id="famille_list">
+
+            {% for famille in familles_list %}
+            <option value="{{famille.name}}"> </option>
+            {% endfor %}
+            </datalist>    
+
+        </div>
+        <br>
+        
+
+    </form>
+    
+    <div class="table-responsive-sm">
+                
+
+
+                <table class="table table-striped table-secondary">
+                    <thead>
+                        <tr>
+                            <th scope="col"> Ingrédient </th>
+                            <th scope="col"> modifier </th>
+                            <th scope="col"> voir détails </th>
+                            <th scope="col"> supprimer</th>
+                            <th scope="col"> dupliquer</th>
+
+                        </tr>
+            
+                    </thead>
+
+
+                    <tbody>     
+    {% for famille in familles %}        
+    <tr>
+                <td> {{famille.name}} </td>     
+
+                <td> <a class="btn btn-outline-info" href="{% url 'familles-update' famille.id %}">Modifier</a></td>   
+                <td> <a class="btn btn-outline-info" href="{% url 'famille-ingredients' famille.id %}">voir details</a></td>   
+                <td> <a class="btn btn-outline-danger" href="{% url 'familles-delete' famille.id %}">Supprimer</a>  </td>
+
+
+                <td>                                 
+                    <form action="" method="post">
+
+                        {% csrf_token %}
+
+
+                        <div style='visibility:hidden; height:0'>
+                            <select id="famille_id" name="id">
+                                <option value="{{ famille.id}}">{{ famille.name }}</option>
+                            </select>    
+                        </div>
+
+                        
+                        <input class="btn" id="submit_button" type="submit" name="submit_id" value="Dupliquer">
+                    </form>
+        </td>  
+
+
+    </tr>
+        <!--
+        <div class="card" style="width: 18rem;">
+  
+                    <div class="card-body">
+                        <h5 class="card-title"> {{famille.name}} </h5>
+                        <a href={% url 'familles-detail' famille.pk%} class="card-link">voir details famille</a>
+                    </div>
+                </div>
+                
+    -->            
+    {%endfor%}
+                    </tbody>
+                </table>
+
+
+   
+
+    <div class="table-responsive-sm">
+
+
+
+    {% endblock content%}

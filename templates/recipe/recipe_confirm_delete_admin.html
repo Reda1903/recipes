@@ -1,0 +1,34 @@
+# recipes/templates/recipes/recipe_confirm_delete.html
+{% extends "recipe/base.html" %}
+<!-- -->
+{% load crispy_forms_tags %}
+<!-- -->
+
+{%block back%} 
+{%url "recettes-recipe" %}
+{%endblock back%}
+
+
+
+{% block content %}
+<div class="container">
+  <form method="POST">
+    {% csrf_token %}
+    <fieldset class="form-group">
+      <legend class="mb-4">Voulez-vous vraiment supprimer cette recette?</legend>
+      <h2>{{object}}</h2>
+      {{ form|crispy }}
+    </fieldset>
+    <div class="form-group py-3">
+      <input class="btn btn-outline-danger" type="submit" value="Delete" />
+    </div>
+  </form>
+  <div class="border-top pt-3">
+    <a class="text-muted" href="{% url 'recettes-recipe' %}"
+      >Cancel</a
+    >
+  </div>
+</div>
+
+<!-- -->
+{% endblock content %}

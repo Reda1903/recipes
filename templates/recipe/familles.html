@@ -1,0 +1,22 @@
+{% extends 'recipe/base.html' %}
+
+
+    {% block content %}
+    <h1> Mes familles d'ingrédients </h1>
+    {% for famille in familles%}
+
+    <div class="card" style="width: 18rem;">
+  
+        <div class="card-body">
+            <h5 class="card-title"> {{famille.name}} </h5>
+            {% for ingredient in ingredients%}
+                {% if ingredient.famille == famille%}
+                    <p class="card-text">{{ingredient}}</p>
+                {% endif %}
+            {% endfor %}
+            <a href="#" class="card-link">voir détails ingrédient</a>
+        </div>
+    </div>
+    
+    {%endfor%}
+    {% endblock content%}

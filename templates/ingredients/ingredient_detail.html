@@ -1,0 +1,208 @@
+{% extends 'recipe/base.html' %}
+
+
+{%block back%} 
+{%url "ingredients-recipe" %}
+{%endblock back%}
+
+    {% block content %}
+
+<!-- 
+
+    <div class="card" style="width: 18rem;">
+  
+        <div class="card-body">
+            <h5 class="card-title"> {{object.name}} </h5>
+            <p class="card-text">{{object.famille}}</p>
+            <p class="card-text">energie en (kj / 100g) : {{object.energie_kJ}}</p>
+            <p class="card-text">energie en (kcal / 100g) : {{object.energie_kcal}}</p>
+            <p class="card-text">sodium en (g / 100g) : {{object.sodium}}</p>
+            <p class="card-text">glucides en (g / 100g) : {{object.glucides}}</p>
+        </div>
+    </div>
+
+    <div class="col-4">
+        <a class="btn btn-outline-info" href="{% url 'ingredients-update' object.id %}">Update</a>
+        <a class="btn btn-outline-danger" href="{% url 'ingredients-delete' object.id %}">Delete</a>
+    </div
+
+-->
+
+
+<div class="table-responsive-sm">
+                
+
+
+    <table class="table table-striped table-secondary">
+        <thead>
+            <tr>
+                <th scope="col"> famille </th>
+                <th scope="col"> ingrédient </th>
+                <th scope="col"> forme </th>
+                <th scope="col"> calories </th>
+                <th scope="col"> sodium </th>
+                <th scope="col"> glucide </th>
+
+                <th scope="col"> proteins </th>
+                <th scope="col"> fibres </th>
+                <th scope="col"> lipide </th>
+                <th scope="col"> sucres </th>
+                <th scope="col"> fructose </th>
+
+                <th scope="col"> galactose </th>
+                <th scope="col"> glucose </th>
+                <th scope="col"> lactose </th>
+                <th scope="col"> maltose </th>
+                <th scope="col"> saccharose </th>
+
+                <th scope="col"> amidon </th>
+                <th scope="col"> fibresALimentraires </th>
+                <th scope="col"> polyols </th>
+                <th scope="col"> cendres </th>
+                <th scope="col"> alcool </th>
+
+                <th scope="col"> acidesOrganiques </th>
+                <th scope="col"> AGsatures </th>
+                <th scope="col"> AGmonoinsature </th>
+                <th scope="col"> AGpolyinsature </th>
+                <th scope="col"> AGbutyrique </th>
+
+                <th scope="col"> AGcaproique </th>
+                <th scope="col"> AGcaprylique </th>
+                <th scope="col"> AGcaprique </th>
+                <th scope="col"> AGlaurique </th>
+                <th scope="col"> AGmyristique </th>
+
+                <th scope="col"> AGpalmitique </th>
+                <th scope="col"> AGbstearique </th>
+                <th scope="col"> AGoleique </th>
+                <th scope="col"> AGlinoleique </th>
+                <th scope="col"> AGalphalinolenique </th>
+
+                <th scope="col"> AGarachidonique </th>
+                <th scope="col"> AGepa </th>
+                <th scope="col"> AGdha </th>
+                <th scope="col"> cholesterol </th>
+                <th scope="col"> selchlorure </th>
+
+                <th scope="col"> calcium </th>
+                <th scope="col"> chlorure </th>
+                <th scope="col"> cuivre </th>
+                <th scope="col"> fer </th>
+                <th scope="col"> iode </th>
+
+                <th scope="col"> magnesium </th>
+                <th scope="col"> manganese </th>
+                <th scope="col"> phosphore </th>
+                <th scope="col"> potassium </th>
+                <th scope="col"> selenium </th>
+
+                <th scope="col"> zinc </th>
+                <th scope="col"> retinol </th>
+                <th scope="col"> betaCarotene </th>
+                <th scope="col"> vitamineD </th>
+                <th scope="col"> vitamineE </th>
+
+                <th scope="col"> VitamineK1 </th>
+                <th scope="col"> vitamineK2 </th>
+                <th scope="col"> vitamineB1 </th>
+                <th scope="col"> vitamineB2 </th>
+                <th scope="col"> VitamineB3 </th>
+
+                <th scope="col"> vitamineB5 </th>
+                <th scope="col"> vitamineB6 </th>
+                <th scope="col"> vitamineB9 </th>
+
+            </tr>
+
+        </thead>
+
+        <tbody>    
+  
+
+            <tr>
+  
+                <td> {{ingredient.famille}} </td> 
+                <td> {{ingredient.forme}} </th>
+                <td> {{ingredient.name}} </td>   
+
+                <th scope="col"> {{ingredient.energie_kJ}} </th>
+                <th scope="col"> {{ingredient.sodium}} </th>
+                <th scope="col"> {{ingredient.glucide}} </th>
+
+                <th scope="col"> {{ingredient.proteins}} </th>
+                <th scope="col"> {{ingredient.fibres}} </th>
+                <th scope="col"> {{ingredient.lipide}} </th>
+                <th scope="col"> {{ingredient.sucres}} </th>
+                <th scope="col"> {{ingredient.fructose}} </th>
+
+                <th scope="col"> {{ingredient.galactose}} </th>
+                <th scope="col"> {{ingredient.glucose}} </th>
+                <th scope="col"> {{ingredient.lactose}} </th>
+                <th scope="col"> {{ingredient.maltose}} </th>
+                <th scope="col"> {{ingredient.saccharose}} </th>
+
+                <th scope="col"> {{ingredient.amidon}} </th>
+                <th scope="col"> {{ingredient.fibresALimentraires}} </th>
+                <th scope="col"> {{ingredient.polyols}} </th>
+                <th scope="col"> {{ingredient.cendres}} </th>
+                <th scope="col"> {{ingredient.alcool}} </th>
+
+                <th scope="col"> {{ingredient.acidesOrganiques}} </th>
+                <th scope="col"> {{ingredient.AGsatures}} </th>
+                <th scope="col"> {{ingredient.AGmonoinsature}} </th>
+                <th scope="col"> {{ingredient.AGpolyinsature}} </th>
+                <th scope="col"> {{ingredient.nameAGbutyrique}} </th>
+
+                <th scope="col"> {{ingredient.AGcaproique}} </th>
+                <th scope="col"> {{ingredient.AGcaprylique}} </th>
+                <th scope="col"> {{ingredient.AGcaprique}} </th>
+                <th scope="col"> {{ingredient.AGlaurique}} </th>
+                <th scope="col"> {{ingredient.AGmyristique}} </th>
+
+                <th scope="col"> {{ingredient.AGpalmitique}} </th>
+                <th scope="col"> {{ingredient.AGbstearique}} </th>
+                <th scope="col"> {{ingredient.AGoleique}} </th>
+                <th scope="col"> {{ingredient.AGlinoleique}} </th>
+                <th scope="col"> {{ingredient.AGalphalinolenique}} </th>
+
+                <th scope="col"> {{ingredient.AGarachidonique}} </th>
+                <th scope="col"> {{ingredient.AGepa}} </th>
+                <th scope="col"> {{ingredient.AGdha}} </th>
+                <th scope="col"> {{ingredient.cholesterol}} </th>
+                <th scope="col"> {{ingredient.selchlorure}} </th>
+
+                <th scope="col"> {{ingredient.calcium}} </th>
+                <th scope="col"> {{ingredient.chlorure}} </th>
+                <th scope="col"> {{ingredient.cuivre}} </th>
+                <th scope="col"> {{ingredient.fer}} </th>
+                <th scope="col"> {{ingredient.iode}} </th>
+
+                <th scope="col"> {{ingredient.magnesium}} </th>
+                <th scope="col"> {{ingredient.manganese}} </th>
+                <th scope="col"> {{ingredient.phosphore}} </th>
+                <th scope="col"> {{ingredient.potassium}} </th>
+                <th scope="col"> {{ingredient.selenium}} </th>
+
+                <th scope="col"> {{ingredient.zinc}} </th>
+                <th scope="col"> {{ingredient.retinol}} </th>
+                <th scope="col"> {{ingredient.betaCarotene}} </th>
+                <th scope="col"> {{ingredient.vitamineD}} </th>
+                <th scope="col"> {{ingredient.vitamineE}} </th>
+
+                <th scope="col"> {{ingredient.VitamineK1}} </th>
+                <th scope="col"> {{ingredient.vitamineK2}} </th>
+                <th scope="col"> {{ingredient.vitamineB1}} </th>
+                <th scope="col"> {{ingredient.vitamineB2}} </th>
+                <th scope="col"> {{ingredient.VitamineB3}} </th>
+
+                <th scope="col"> {{ingredient.vitamineB5}} </th>
+                <th scope="col"> {{ingredient.vitamineB6}} </th>
+                <th scope="col"> {{ingredient.vitamineB9}} </th>
+            </tr>
+
+        </tbody>
+    </table>
+
+
+    {% endblock content%}

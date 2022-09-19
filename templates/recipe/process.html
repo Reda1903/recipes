@@ -1,0 +1,221 @@
+{% extends 'recipe/base.html' %}
+
+{%block back%} 
+{%url 'recettes-update' pk %}
+{%endblock back%}
+
+
+
+{% block content%}
+{%load crispy_forms_tags%}
+
+
+<h3> Etapes de préparation :</h3>
+
+<form id="pet_form"  action="{% url 'create_recipe_process' pk %}" method="post" enctype="multipart/form-data">
+
+    {% csrf_token %}
+<!-- {{ form | crispy }}-->    
+
+{% for hidden in form.hidden_fields %}
+{{ hidden }}
+{% endfor %}
+
+  
+    {{ formset.management_form }}
+    {% for form in formset %}
+
+
+
+    <div class="image-form d-flex justify-content-between"  id="recipeForm"  >
+
+        {{form.step}}
+        {{form.DELETE}}
+
+        <button class="align-self-center btn btn-danger delete-image-form">supprimer</button>
+    </div>
+
+
+    
+    {% for hidden in form.hidden_fields %}
+        {{ hidden }}
+    {% endfor %}
+
+
+
+    {% endfor %}
+
+
+    <button id="add-image-form" class="btn btn-primary my-3">ajouter une nouvelle etape</button>
+
+
+
+
+    <h3> Température + Durée de cuisson :</h3>
+
+    {{ formset2.management_form }}
+    {% for form in formset2 %}
+
+
+
+    <div class="image-form2 d-flex justify-content-between"  id="recipeForm"  >
+
+        {{form.step}}
+        {{form.DELETE}}
+
+        <button class="align-self-center btn btn-danger delete-image-form2">supprimer</button>
+    </div>
+
+
+    {% for hidden in form.hidden_fields %}
+        {{ hidden }}
+    {% endfor %}
+
+    {% endfor %}
+
+
+
+
+
+    
+    <button id="add-image-form2" class="btn btn-primary my-3">ajouter une nouvelle etape de cuisson</button>
+    <input type="hidden" name="counter_newid" value="3" id="id_counter_new_id">
+  
+    <div>
+        {{ form_weigths.management_form }}
+        {% for form in form_weigths %}    
+            <div class = 'row'>
+                <div class = " col-sm">
+                <h2>Poids unitaire cru (en g)</h2>    
+                    {{form.cru}}
+                <div>
+                <div class = " col-sm">   
+                <h2>Poids unitaire cuit (en g) </h2>
+                    {{form.unitaire}}
+                <div>
+        
+            </div> 
+
+            {% for hidden in form.hidden_fields %}
+                {{ hidden }}
+            {% endfor %}
+        {% endfor %} 
+    </div>
+
+
+    <input type="submit" class="btn btn-primary my-3" value="Terminer" name='terminerBttn'/>  </button>
+
+</form>
+
+
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+
+
+    <script>
+    
+    const imageForm = document.getElementsByClassName("image-form");
+    const imageForm2 = document.getElementsByClassName("image-form2");
+
+    const mainForm = document.querySelector("#pet_form");
+
+    const addImageFormBtn = document.querySelector("#add-image-form");
+    const addImageFormBtn2 = document.querySelector("#add-image-form2");
+
+    const submitFormBtn = document.querySelector('[type="submit"]');
+
+    const totalForms = document.getElementById("id_process_recipe-TOTAL_FORMS");
+    const totalForms2 = document.getElementById("id_cooking_recipe-TOTAL_FORMS");
+    
+    const counterID = document.getElementById("id_counter_new_id");
+    
+
+    addImageFormBtn.addEventListener("click", function (event) {
+        event.preventDefault();
+        //let formCount = imageForm.length ;
+        const formCount = imageForm.length
+        //const formCount = parseInt(counterID.getAttribute('value')) + 1 ;
+        const newImageForm = imageForm[0].cloneNode(true);
+        const formRegex = RegExp(`process_recipe-(\\d){1}-`, 'g');
+    
+        newImageForm.innerHTML = newImageForm.innerHTML.replace(formRegex, `process_recipe-${formCount}-`);
+        newImageForm.style.visibility = 'visible';
+        newImageForm.style.height='100%';
+    
+
+        mainForm.insertBefore(newImageForm, addImageFormBtn);
+        //totalForms.setAttribute('value', imageForm.length);
+        totalForms.setAttribute('value', formCount + 1);
+        
+        //counterID.setAttribute('value', formCount);
+    
+    });
+
+    addImageFormBtn2.addEventListener("click", function (event) {
+        event.preventDefault();
+        //let formCount = imageForm.length ;
+        const formCount = imageForm2.length
+        //const formCount = parseInt(counterID.getAttribute('value')) + 1 ;
+        const newImageForm = imageForm2[0].cloneNode(true);
+        const formRegex = RegExp(`cooking_recipe-(\\d){1}-`, 'g');
+    
+        newImageForm.innerHTML = newImageForm.innerHTML.replace(formRegex, `cooking_recipe-${formCount}-`);
+        newImageForm.style.visibility = 'visible';
+        newImageForm.style.height='100%';
+    
+
+        mainForm.insertBefore(newImageForm, addImageFormBtn2);
+        //totalForms.setAttribute('value', imageForm.length);
+        totalForms2.setAttribute('value', formCount + 1);
+        
+        //counterID.setAttribute('value', formCount);
+    
+    });
+
+
+
+    
+    mainForm.addEventListener("click", function (event) {
+
+        if (event.target.classList.contains("delete-image-form")) {
+            event.preventDefault();
+            event.target.parentElement.querySelectorAll('[id$="-DELETE"]')[0].checked = true;
+
+            event.target.parentElement.style.visibility = 'hidden';
+            event.target.parentElement.style.height=0;
+        }
+    });
+    
+
+    mainForm.addEventListener("click", function (event) {
+
+        if (event.target.classList.contains("delete-image-form2")) {
+            event.preventDefault();
+            event.target.parentElement.querySelectorAll('[id$="-DELETE"]')[0].checked = true;
+
+            event.target.parentElement.style.visibility = 'hidden';
+            event.target.parentElement.style.height=0;
+        }
+    });
+
+
+
+
+
+    </script>
+    <script>
+        var del = document.querySelectorAll('[id$="-DELETE"]')
+    
+        for (let i=0; i < del.length; i++ ) {
+            console.log(del[i]);
+            del[i].style.visibility = 'hidden';
+        }
+            
+    </script>
+    
+    
+    
+
+    
+    
+{% endblock %}

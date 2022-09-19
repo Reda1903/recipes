@@ -1,0 +1,26 @@
+{% extends 'recipe/base.html' %}
+
+
+{%block back%} 
+{%url "recipe-home" %}
+{%endblock back%}
+
+
+    {% block content %}
+
+
+    <div class="card" style="width: 18rem;">
+        
+  
+        <div class="card-body">
+            <h5 class="card-title"> {{object.name}} </h5>
+            <p class="card-text">{{object.famille}}</p>
+        </div>
+    </div>
+
+    <div class="col-4">
+        <a class="btn btn-outline-info" href="{% url 'familles-update' object.id %}">Update</a>
+        <a class="btn btn-outline-danger" href="{% url 'familles-delete' object.id %}">Delete</a>
+    </div
+
+    {% endblock content%}

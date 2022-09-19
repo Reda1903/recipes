@@ -1,0 +1,262 @@
+{% extends 'recipe/base2.html' %}
+
+{%load static %}
+
+
+    {% block content %}
+
+    <style>
+
+        .identifiant{
+            z-index : 10;
+            position : relative;
+        }
+
+
+        .col-sm-offset-1{
+            margin-top: 1em;
+        }
+
+        div.cont {
+            margin-top: 10%;
+            margin-bottom: 0%;
+            margin-left: 0%;
+            margin-right: 0%;
+            background-color: rgba(146, 95, 54, 1);
+            border-radius: 25px;
+            height : 100%;
+            padding: 0px;
+            padding-bottom: 2%;
+            opacity : 1;
+        
+        }
+
+        div.access {
+
+
+            background-color: rgba(255, 255, 255,1);
+            border-radius: 15px;
+
+            margin-left: 18%;
+            margin-right: 18%;
+            font-size: 100%;
+
+            text-align: center;
+            justify-content: center;
+
+        }
+
+        h2.title { 
+            text-align: center;
+            margin-left: 10%;
+            margin-right: 10%;
+            color : white;
+            font-size:150%;
+            
+
+        }
+
+        a.hyper { 
+            text-align: center;
+            text-decoration:none; 
+            color: black;
+
+        }
+/*        div.logo{
+            padding : 500 px
+        }
+        */
+    </style>
+
+    {% if request.user.is_staff %} 
+
+    <br>
+    <br>
+
+
+
+    <br>
+    <br>
+    <div class="" style="margin-left : 0%; ">
+        <div class="row">
+
+        
+            <div class="col-10 offset-sm-2 col-md-3 offset-md-0 col-sm-offset-1">
+                <div class = "cont">
+                    <h2 class = "title">
+                        Tableau des familles
+                    </h2>
+
+                    <br>
+                    <br>
+                    <div class = "access" >
+                        <a class = "hyper" href={%url 'familles-recipe'  %} >Visualiser les familles </a>
+                    </div>
+                    <br>
+
+                    <div class = "access"  >
+                        <a class = "hyper" href={%url 'familles-create' %}>Créer une famille</a>
+                    </div>
+
+   
+                </div>
+            </div>    
+
+
+            <br>
+            <br>
+
+            <div class="col-10 offset-sm-2 col-md-3 offset-md-0 col-sm-offset-1"> 
+
+                <div class = "cont">
+
+                    <h2 class = "title">
+                        Tableau des ingrédients
+                    </h2>
+
+                    <br>
+                    <br>
+                    <div class = "access">
+                        <a class = "hyper"   href={%url 'ingredients-recipe' %}>Visualiser les ingrédients</a>
+                    </div>
+                       <br>
+                    <div class = "access">
+                        <a class= "hyper"  href={%url 'ingredients-create' %}>Créer un ingrédient</a>
+                    </div>
+                       
+                </div>
+
+
+            </div>
+
+            
+    <br>
+    <br>
+
+        <div class="col-10 offset-sm-2 col-md-3 offset-md-0 col-sm-offset-1">
+            <div class="cont">
+                <h2 class = "title">
+                    Les recettes
+                </h2>
+            
+                <br>
+                <br>
+    
+                <div class = "access">
+                    
+                    <a class="hyper" href={%url 'recettes-recipe-admin' %}>Visualiser les recettes du gestionnaire</a>
+
+                </div>
+                <br>
+                <div class="access"> 
+                    <a class="hyper" href={%url 'recettes-recipe' %}>Visualiser les recettes des utilisateurs </a>
+                </div>
+                
+                <br>
+
+                <div class="access"> 
+                    <a class="hyper" href={%url 'create_recipe' %}>Créer une recette</a>    
+                </div>
+                
+                <br>
+            
+            </div>
+
+        </div>
+
+
+        <br>
+        <br>
+
+
+        <div class="col-10 offset-sm-2 col-md-3 offset-md-0 col-sm-offset-1">
+            <div class="cont">
+
+                <h2 class="title">
+                    Les contraintes
+                </h2>
+            
+                <br>
+                <br>
+                
+                <div class = "access">
+
+                    <a class="hyper" href='#'>Visualiser les contraintes</a>
+                </div>
+                <br>
+
+                <div class = "access">
+                    <a class="hyper" href='#'>Créer une contrainte</a>
+                    <br>
+                </div>        
+
+            </div>
+        
+
+            </div>
+
+            
+    <br>
+    <br>
+
+    </div>
+
+
+
+    </div>
+
+    {% else %}
+
+    <br>
+   
+    <br>
+
+
+    
+    <div class="d-flex justify-content-center">
+
+        
+
+        <div class="col-12 col-md-6">
+
+
+            <div class="cont">
+                <h2 class = "title">
+                    Les recettes
+                </h2>
+            
+                <br>
+
+
+
+                <div class="access"> 
+                    <a class="hyper" href={%url 'recettes-recipe-utilisateur' %}>Visualiser Mes recettes </a>
+                </div>
+                
+                <br>
+
+                <div class="access"> 
+                    <a class="hyper" href={%url 'create_recipe' %}>Créer une recette</a>    
+                </div>
+                
+            
+            </div>
+
+        </div>
+
+  
+
+
+
+    </div>
+
+
+
+</div>
+
+
+
+    {%endif%}
+
+
+    {% endblock content%}
